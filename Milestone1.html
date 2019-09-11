@@ -1,0 +1,23 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  $.ajax({
+		type: "GET",
+        url: 'http://it-ebooks-api.info/v1/search/modern%20web',
+        contentType: "application/json",
+        dataType: 'json',
+        success: function(result){
+			document.getElementById("demo").innerHTML = JSON.stringify(result);
+        },
+		error: function(xhr,status,error){
+			console.log(error);
+		}
+    });
+</script>
+</head>
+<body>
+
+
+</body>
+</html>
