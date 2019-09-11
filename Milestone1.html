@@ -9,7 +9,7 @@
 <script type="text/javascript">
 $(function(){
 	$("#btn").click(function(){
-        	$.getJSON("http://it-ebooks-api.info/v1/search/modern%20web",function(data){						var $jsontip = $("#jsonTip");
+        	$.getJSON("https://it-ebooks-api.info/v1/search/modern%20web",function(data){						var $jsontip = $("#jsonTip");
 			var strHtml = "";
 			$jsontip.empty();
 			strHtml += "Error: " + data["Error"] + "<br>";
@@ -23,7 +23,7 @@ $(function(){
 				strHtml += "Title: " + info2["Title"] + "<br>";
 				strHtml += "SubTitle: " + info2["SubTitle"] + "<br>";
 				strHtml += "Description: " + info2["Description"] + "<br>";
-				strHtml += "Image: " + info2["Image"] + "<br>";
+				strHtml += "Image:<br> <img src=\"" + info2["Image"] + "\"><br>";
 				strHtml += "isbn: " + info2["isbn"] + "<br>";
 				strHtml += "<hr>";
 				})
