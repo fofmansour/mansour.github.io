@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>getJSON</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<style type="text/css">
+ #divframe{ border:1px solid #999; width:500px; margin:0 auto;}
+ .loadTitle{ background:#CCC; height:30px;}
+</style>
+<script type="text/javascript">
+
+
+$(function(){
+	$("#btn").click(function(){
+        	$.getJSON("https://www.googleapis.com/books/v1/volumes/Wfan6L9RGgYC",function(data){						var $jsontip = $("#jsonTip");
+			var strHtml = "";
+			strHtml += "Kind: " + data["kind"] + "<br>";
+			strHtml += "id: " + data["id"] + "<br>";
+			strHtml += "etag: " + data["etag"] + "<br>";
+			strHtml += "selfLink: " + data["selfLink"] + "<br>";
+			var volumeInfo = data["volumeInfo"];
+			strHtml += "title: " + volumeInfo["title"] + "<br>";
+			strHtml += "subtile: " + volumeInfo["subtitle"] + "<br>";
+			strHtml += "authors: " + volumeInfo["authors"] + "<br>";
+			strHtml += "publisher: " + volumeInfo["No Starch PRESS"] + "<br>";
+			strHtml += "publishedDate: " + volumeInfo["2013"] + "<br>";
+			strHtml += "description: " + volumeInfo["The modern Web development"] + "<br>";
+			var IndustryIdentifiers = volumeInfo["industryIdentifiers"];
+			$.each(IndustryIdentifiers,function(infoIndex,info2){
+			strHtml += "type: " + info2["type"] + "<br>";
+			strHtml += "identifier: " + info2["identifier"] + "<br>";
+			})
+			var readingModes = volumeInfo["readingModes"];
+			strHtml += "text: " + readingModes["text"] + "<br>";
+			strHtml += "image: " + readingModes["image"] + "<br>";
+			strHtml += "pageCount: " + readingModes["pageCount"] + "<br>";
+			
+			strHtml += "printedPageCount: " + volumeInfo["printedPageCount"] + "<br>";
+		var dimensions = volumeInfo["dimensions"];
+			strHtml += "height: " + dimensions["height"] + "<br>";
+			strHtml += "width: " + dimensions["width"] + "<br>";
+			strHtml += "thickness: " + dimensions["thickness"] + "<br>";
+			
+			
+			
+			strHtml += "printType: " + volumeInfo["printType"] + "<br>";
+			strHtml += "categories: " + volumeInfo["categories"] + "<br>";
+			
+			strHtml += "averageRating: " + volumeInfo["averageRating"] + "<br>";
+			strHtml += "ratingsCount: " +volumeInfo["ratingsCount"] + "<br>";
+			strHtml += "allowAnonLogging: " +volumeInfo["maturityRating"] + "<br>";
+			strHtml += "contentVersion: " + volumeInfo["allowAnonLogging"] + "<br>";
+			
+			var panelizationSummary = volumeInfo["panelizationSummary"];
+			strHtml += "containsEpubBubbles: " +panelizationSummary ["containsEpubBubbles"] + "<br>";
+			strHtml += "containsImageBubbles: " +panelizationSummary ["containsImageBubbles"] + "<br>";
+			
+			var imageLinks = volumeInfo["imageLinks"];
+				strHtml += "smallThumbnail: " + imageLinks["smallThumbnail"] + "<br>";
+				strHtml += "Image:<br> <img src=\"" + imageLinks["smallThumbnail"] + "\"><br>";
+				strHtml += "thumbail: " + imageLinks["thumbail"] + "<br>";
+				strHtml += "small: " + imageLinks["small"] + "<br>";
+				strHtml += "medium: " + imageLinks["medium"] + "<br>";
+				strHtml += "large: " + imageLinks["large"] + "<br>";
+				strHtml += "extraLarge: " + imageLinks["extraLarge"] + "<br>";
+				strHtml += "language: " + imageLinks["language"] + "<br>";
+				var layerInfo= data["layerInfo"];
+				var layers= layerInfo["layers"];
+				strHtml += "layerid: " + layers["layerid"] + "<br>";
+				strHtml += "volumeAnnotationsVersion: " + layers["volumeAnnotationsVersion"] + "<br>";
+				var saleInfo= data["saleInfo"];
+				strHtml += "country: " + saleInfo["country"] + "<br>";
+				strHtml += "saleability: " + saleInfo["saleability"] + "<br>";
+				strHtml += "isEbook: " +saleInfo["isEbook"] + "<br>";
+				var accessInfo= data["accessInfo"];
+				strHtml += "country: " +accessInfo["country"] + "<br>";
+			strHtml += "viewability: " +accessInfo["viewability"] + "<br>";
+			strHtml += "embeddable: " +saleInfo["embeddable"] + "<br>";
+			strHtml += "publicDomain: " +saleInfo["publicDomain"] + "<br>";
+			strHtml += "textToSpeechPermission: " +saleInfo["textToSpeechPermission"] + "<br>";
+			
+			var epub= accessInfo["epub"];
+			strHtml += "isAvailable: " +accessInfo["isAvailable"] + "<br>";
+			
+			var pdf= accessInfo["pdf"]
+			strHtml += "isAvailable: " +accessInfo["isAvailable"] + "<br>";
+			strHtml += "webReadLink: " +accessInfo["webReadLink"] + "<br>";
+			strHtml += "accessViewStatus: " +accessInfo["accessViewStatus"] + "<br>";
+			strHtml += "quoteSharingAllowed: " +accessInfo["quoteSharingAllowed"] + "<br>";
+			
+			
+		
+			
+			
+			
+			
+			
+			
+			
+			
+			$jsontip.html(strHtml);	
+			})
+		})
+	
+	})
+</script>
+</head>
+<body>
+<br />
+<div id="divframe">
+  <div class="loadTitle">
+    <input type="button" value="Click here to get data" id="btn"/>
+  </div>
+  <div id="jsonTip">
+  </div>
+</div>
+</body>
+</html>
+</body>
+
+</html>
