@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>getJSON</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<style type="text/css">
+ #divframe{ border:1px solid #999; width:500px; margin:0 auto;}
+ .loadTitle{ background:#CCC; height:30px;}
+</style>
+<script type="text/javascript">
+
+
+$(function(){
+	$("#btn").click(function(){
+        	$.getJSON("https://it-ebooks-api.info/v1/search/modern%20web",function(data){						var $jsontip = $("#jsonTip");
+			var strHtml = "";
+			strHtml += "Error: " + data["Error"] + "<br>";
+			strHtml += "Time: " + data["Time"] + "<br>";
+			strHtml += "Total: " + data["Total"] + "<br>";
+			strHtml += "Page: " + data["Page"] + "<br>";
+			var boo = data["Books"];
+			strHtml += "<hr>";
+			$.each(boo,function(infoIndex,info2){
+				strHtml += "ID: " + info2["ID"] + "<br>";
+				strHtml += "Title: " + info2["Title"] + "<br>";
+				strHtml += "SubTitle: " + info2["SubTitle"] + "<br>";
+				strHtml += "Description: " + info2["Description"] + "<br>";
+				strHtml += "Image:<br> <img src=\"" + info2["Image"] + "\"><br>";
+				strHtml += "isbn: " + info2["isbn"] + "<br>";
+				strHtml += "<hr>";
+				})
+			$jsontip.html(strHtml);	
+			})
+		})
+	
+	})
+</script>
+</head>
+<body>
+<br />
+<div id="divframe">
+  <div class="loadTitle">
+    <input type="button" value="Click here to get data" id="btn"/>
+  </div>
+  <div id="jsonTip1">
+  </div>
+  <div id="jsonTip">
+  </div>
+</div>
+</body>
+</html>
+</body>
+
+</html>
