@@ -3,8 +3,15 @@
 <title>getJSON</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <style type="text/css">
- #divframe{ border:1px solid #999; width:500px; margin:0 auto;}
+ #divframe{ border:1px solid #999; width:75%; margin:0 auto;}
  .loadTitle{ background:#CCC; height:30px;}
+  img{padding: 20px;}
+  .book-photo {
+			float: left;
+			width: 30%;
+			margin-right: 15px;
+		}
+  td{vertical-align:top;}
 </style>
 <script type="text/javascript">
 
@@ -12,77 +19,67 @@
 $(function(){
 	$("#btn").click(function(){
         	$.getJSON("https://www.googleapis.com/books/v1/volumes?q=modern%20web",function(data1){						var $jsontip = $("#jsonTip");
-			var strHtml = "";
+			var strHtml = "<table>";
 			var items = data1["items"];
 			$.each(items,function(infoIndex,data){
 			var volumeInfo = data["volumeInfo"];
-			strHtml += "title: " + volumeInfo["title"] + "<br>";
-			strHtml += "subtitle: " + volumeInfo["subtitle"] + "<br>";
-			strHtml += "authors: " + volumeInfo["authors"] + "<br>";
-			strHtml += "publisher: " + volumeInfo["publisher"] + "<br>";
-			strHtml += "publishedDate: " + volumeInfo["publishedDate"] + "<br>";
-			strHtml += "description: " + volumeInfo["description"] + "<br>";
+			var imageLinks = volumeInfo["imageLinks"];
+				strHtml += '<img src="'+imageLinks["thumbnail"]+'" class="book-photo" />';
+			strHtml += "<h1>Title: " + volumeInfo["title"] + "</h1>";
+			strHtml += "Subtitle: " + volumeInfo["subtitle"] + "<br>";
+			strHtml += "Authors: " + volumeInfo["authors"] + "<br>";
+			strHtml += "Publisher: " + volumeInfo["publisher"] + "<br>";
+			strHtml += "PublishedDate: " + volumeInfo["publishedDate"] + "<br>";
+			strHtml += "Description: " + volumeInfo["description"] + "<br>";
 			var IndustryIdentifiers = volumeInfo["industryIdentifiers"];
 			$.each(IndustryIdentifiers,function(infoIndex,info2){
-			strHtml += "type: " + info2["type"] + "<br>";
-			strHtml += "identifier: " + info2["identifier"] + "<br>";
+			strHtml += "Type: " + info2["type"] + "<br>";
+			strHtml += "Identifier: " + info2["identifier"] + "<br>";
 			})
 			var readingModes = volumeInfo["readingModes"];
-			strHtml += "text: " + readingModes["text"] + "<br>";
-			strHtml += "image: " + readingModes["image"] + "<br>";
-			strHtml += "pageCount: " + volumeInfo["pageCount"] + "<br>";
+			strHtml += "Text: " + readingModes["text"] + "<br>";
+			strHtml += "Image: " + readingModes["image"] + "<br>";
+			strHtml += "PageCount: " + volumeInfo["pageCount"] + "<br>";
 			
-			strHtml += "printType: " + volumeInfo["printType"] + "<br>";
-			
-			
+			strHtml += "PrintType: " + volumeInfo["printType"] + "<br>";
 			
 			
-			strHtml += "categories: " + volumeInfo["categories"] + "<br>";
 			
-			strHtml += "averageRating: " + volumeInfo["averageRating"] + "<br>";
-			strHtml += "ratingsCount: " +volumeInfo["ratingsCount"] + "<br>";
-			strHtml += "allowAnonLogging: " +volumeInfo["maturityRating"] + "<br>";
-			strHtml += "contentVersion: " + volumeInfo["allowAnonLogging"] + "<br>";
+			
+			strHtml += "Categories: " + volumeInfo["categories"] + "<br>";
+			
+			strHtml += "AverageRating: " + volumeInfo["averageRating"] + "<br>";
+			strHtml += "RatingsCount: " +volumeInfo["ratingsCount"] + "<br>";
+			strHtml += "AllowAnonLogging: " +volumeInfo["maturityRating"] + "<br>";
+			strHtml += "ContentVersion: " + volumeInfo["allowAnonLogging"] + "<br>";
 			
 			var panelizationSummary = volumeInfo["panelizationSummary"];
-			strHtml += "containsEpubBubbles: " +panelizationSummary ["containsEpubBubbles"] + "<br>";
-			strHtml += "containsImageBubbles: " +panelizationSummary ["containsImageBubbles"] + "<br>";
-			
-			var imageLinks = volumeInfo["imageLinks"];
-				strHtml += "smallThumbnail: " + imageLinks["smallThumbnail"] + "<br>";
-				strHtml += "Image:<br> <img src=\"" + imageLinks["smallThumbnail"] + "\"><br>";
-				strHtml += "thumbail: " + imageLinks["thumbail"] + "<br>";
+			strHtml += "ContainsEpubBubbles: " +panelizationSummary ["containsEpubBubbles"] + "<br>";
+			strHtml += "ContainsImageBubbles: " +panelizationSummary ["containsImageBubbles"] + "<br>";
 				
 				var saleInfo= data["saleInfo"];
-				strHtml += "country: " + saleInfo["country"] + "<br>";
+				strHtml += "Country: " + saleInfo["country"] + "<br>";
 				strHtml += "saleability: " + saleInfo["saleability"] + "<br>";
-				strHtml += "isEbook: " +saleInfo["isEbook"] + "<br>";
+				strHtml += "IsEbook: " +saleInfo["isEbook"] + "<br>";
 				var accessInfo= data["accessInfo"];
-				strHtml += "country: " +accessInfo["country"] + "<br>";
-			strHtml += "viewability: " +accessInfo["viewability"] + "<br>";
-			strHtml += "embeddable: " +saleInfo["embeddable"] + "<br>";
-			strHtml += "publicDomain: " +saleInfo["publicDomain"] + "<br>";
-			strHtml += "textToSpeechPermission: " +saleInfo["textToSpeechPermission"] + "<br>";
+				strHtml += "Country: " +accessInfo["country"] + "<br>";
+			strHtml += "Viewability: " +accessInfo["viewability"] + "<br>";
+			strHtml += "Embeddable: " +saleInfo["embeddable"] + "<br>";
+			strHtml += "PublicDomain: " +saleInfo["publicDomain"] + "<br>";
+			strHtml += "TextToSpeechPermission: " +saleInfo["textToSpeechPermission"] + "<br>";
 			
 			var epub= accessInfo["epub"];
-			strHtml += "isAvailable: " +accessInfo["isAvailable"] + "<br>";
+			strHtml += "IsAvailable: " +accessInfo["isAvailable"] + "<br>";
 			
 			var pdf= accessInfo["pdf"]
-			strHtml += "isAvailable: " +pdf["isAvailable"] + "<br>";
-			strHtml += "webReaderLink: " +accessInfo["webReaderLink"] + "<br>";
-			strHtml += "accessViewStatus: " +accessInfo["accessViewStatus"] + "<br>";
-			strHtml += "quoteSharingAllowed: " +accessInfo["quoteSharingAllowed"] + "<br>";
+			strHtml += "IsAvailable: " +pdf["isAvailable"] + "<br>";
+			strHtml += "WebReaderLink: " +accessInfo["webReaderLink"] + "<br>";
+			strHtml += "AccessViewStatus: " +accessInfo["accessViewStatus"] + "<br>";
+			strHtml += "QuoteSharingAllowed: " +accessInfo["quoteSharingAllowed"] + "<br>";
 			
 			})
+			strHtml += "</table>";
 		
-			
-			
-			
-			
-			
-			
-			
-			
 			$jsontip.html(strHtml);	
 			})
 		})
@@ -91,6 +88,8 @@ $(function(){
 </script>
 </head>
 <body>
+<h1>Part 4</h1>
+			<h3>Open-Library Search Results</h3>
 <br />
 <div id="divframe">
   <div class="loadTitle">
