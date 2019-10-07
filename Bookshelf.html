@@ -10,7 +10,6 @@
   img{padding: 20px;}
   .book-photo {
 			float: left;
-			width: 30%;
 			margin-right: 15px;
 		}
   td{vertical-align:top;}
@@ -34,8 +33,8 @@ $(document).ready(function(){
 				try{strHtml+= imageLinks["thumbnail"];
 				}
 				catch(err){
-				strHtml+="https://books.google.com/googlebooks/images/no_cover_thumb.gif width='130'";}
-			strHtml += "><h1>Title: " + volumeInfo["title"] + "</h1>";
+				strHtml+="https://books.google.com/googlebooks/images/no_cover_thumb.gif";}
+			strHtml += " class = 'book-photo'/><h1>Title: " + volumeInfo["title"] + "</h1>";
 			strHtml += "Subtitle: " + volumeInfo["subtitle"] + "<br>";
 			strHtml += "Authors: " + volumeInfo["authors"] + "<br>";
 			strHtml += "Publisher: " + volumeInfo["publisher"] + "<br>";
