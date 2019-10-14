@@ -18,7 +18,8 @@
 
 $(function(){
 	$("#btn").click(function(){
-        	$.getJSON("https://www.googleapis.com/books/v1/volumes?q=modern%20web",function(data1){						var $jsontip = $("#jsonTip");
+        	$.getJSON("https://www.googleapis.com/books/v1/volumes?q=modern%20web",function(data1){						
+			var $jsontip = $("#jsonTip");
 			var strHtml = "<table>";
 			var items = data1["items"];
 			$.each(items,function(infoIndex,data){
