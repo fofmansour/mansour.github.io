@@ -13,7 +13,7 @@
 		html{
 		background:#b9dbf0;}
 		</style>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script>
 $(document).ready(function(){
@@ -24,7 +24,7 @@ $("#Search").click(function(){displaydata();});
 function displaydata(){
 var search=document.getElementById("Book").value;
 search=search.replace(/\s/g,"%20");
-var url="https://www.googleapis.com/books/v1/volumes?q=";
+var url="http://www.googleapis.com/books/v1/volumes?q=";
 $("#jsonTip").html("Results: Page " + pageNum + " <hr noshade>");
 for (i =0; i < 5; i++){
     var page = "&startIndex=" + i *10;
@@ -54,7 +54,7 @@ var strHtml = "<table>";
 				try{strHtml+= imageLinks["thumbnail"];
 				}
 				catch(err){
-				strHtml+="https://books.google.com/googlebooks/images/no_cover_thumb.gif width='50px'";}
+				strHtml+="http://books.google.com/googlebooks/images/no_cover_thumb.gif width='50px'";}
 			strHtml += "><a href='Bookdetails.html?s="+ data1.items[i].id+"'>"+ volumeInfo["title"]+"</a>";
 			
 
