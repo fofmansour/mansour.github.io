@@ -31,17 +31,16 @@ for (i =0; i < 5; i++){
 	var num = i+1;
 	$("#jsonTip").append('<a href="javascript:;" class = "page" startIndex=' +page+ ' pageNum="'+num+'">'+(i+1)+'</a>&nbsp&nbsp');
 	}
-console.log(url);
 
 	$(".page").click(function(){
 			    start= $(this).attr("startIndex");
 				pageNum = $(this).attr("pageNum");
 				displaydata();
 			});	
-			$ ("#jsonTip").append("<br><br>");
-			var url= url + search + start;
-			console.log(url);		
+$ ("#jsonTip").append("<br><br>");
+var url= url + search + start;		
 $.getJSON(url,function(data1){
+	console.log(url);
 	var $jsontip = $("#jsonTip");
 var strHtml = "<table>";
 			var items = data1["items"];
@@ -105,7 +104,8 @@ function getBookInfo(divNum,bookid){
 </script>
 </head>
 <body>
-<a style="position:absolute; top:5%; right:5%"; href="Bookshelf.html">My Bookshelf</a>
+<a style="position:absolute; top:5%; right:5%"; href="Bookshelf.html" target="_blank">My Bookshelf</a>
+<a style="position:absolute; top:1%; right:5%"; href="index.html">Home page</a>
 <div>
  <input type="text" name="Book" id ="Book" autofocus placeholder = " Search" size = "60"><br>
 <button type="submit" id="Search" >Search</button>
