@@ -122,15 +122,10 @@ start="&startIndex="+20*pageNum;
 displaydata();
 }});
 function displaydata(){
-
-
 var search=document.getElementById("Book").value;
 search=search.replace(/\s/g,"%20");
 var url="https://www.googleapis.com/books/v1/volumes?q=";
-
-
 console.log(url);
-
 			$ ("#jsonTip").append("<br><br>");
 			var url= url + search + start;
 			console.log(url);		
@@ -153,7 +148,6 @@ $.getJSON(url,function(data1){
 				//strHtml+="https://books.google.com/googlebooks/images/no_cover_thumb.gif width='50px'";}
 			//strHtml += "><a href='Bookdetails.html?s="+ data1.items[i].id+"'>"+ volumeInfo["title"]+"</a>";
 			
-
 			//strHtml+="</div></td></tr>";
 		//}
 			//strHtml += "</table>";
@@ -209,12 +203,10 @@ $("#hideButton").on('click',hideOverlay);
 				  $ ("#shelfdetails").fadeOut();
 				  }
 function getShelf() {
-
     var shelf_request = "https://www.googleapis.com/books/v1/users/106473463888419424654/bookshelves/0/volumes";
     loading = true;
    
     $.getJSON(shelf_request, function(data1) {
-
      $("#shelfdetails").html("<button type='button' id='hideShelf'>Close</button>");
      $("#hideShelf").on("click", hideShelfOverlay);
      var template = $('#searchTemplate').html();
@@ -257,4 +249,6 @@ function getShelf() {
  <div id="jsonTip"> 
   </div>
   <div id="bookdetails"></div>
-  <div id="shelfdetails"></div>
+  <div id="shelfdetails"></div> 
+  </body>
+  </html>
