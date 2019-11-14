@@ -133,7 +133,7 @@ $.getJSON(url,function(data1){
 	var $jsontip = $("#jsonTip");
 	var template = $('#searchTemplate').html();
      var html = Mustache.render(template, data1);
-	 $jsontip.append(html)
+	 $jsontip.empty().append(html)
 //var strHtml = "<table>";
 			//var items = data1["items"];
 				//strHtml += "<table> ";
