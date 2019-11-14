@@ -1,0 +1,68 @@
+<html>
+<!--https://books.google.com/books?uid=106473463888419424654-->
+<head>
+<meta charset="UTF-8"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<style type="text/css">
+ #divframe{ border:1px solid #999; width:75%; margin:0 auto;}
+ .loadTitle{ background:#CCC; height:30px;}
+  img{padding: 20px;}
+  .book-photo {
+			float: left;
+			margin-right: 15px;
+		}
+  td{vertical-align:top;}
+  html{
+		background:#b4b4b4;}
+</style>
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+
+        	$.getJSON("https://www.googleapis.com/books/v1/users/106473463888419424654/bookshelves/0/volumes",function(data1){						
+			var $jsontip = $("#jsonTip");
+		var strHtml = "<object><table>";
+			var items = data1["items"];
+				strHtml += "<table> ";
+			$.each(items,function(infoIndex,data){
+			var volumeInfo = data["volumeInfo"];
+			var imageLinks = volumeInfo["imageLinks"];
+				strHtml += '<tr><td> <img src='
+				try{strHtml+= imageLinks["thumbnail"];
+				}
+				catch(err){
+				strHtml+="https://books.google.com/googlebooks/images/no_cover_thumb.gif";}
+			strHtml += " class = 'book-photo' 'width=50px'/><h1>Title: " + volumeInfo["title"] + "</h1>";
+			strHtml += "Subtitle: " + volumeInfo["subtitle"] + "<br>";
+			strHtml += "Authors: " + volumeInfo["authors"] + "<br>";
+			strHtml += "Publisher: " + volumeInfo["publisher"] + "<br>";
+			strHtml += "PublishedDate: " + volumeInfo["publishedDate"] + "<br>";
+			strHtml += "Description: " + volumeInfo["description"] + "<br>";
+			var IndustryIdentifiers = volumeInfo["industryIdentifiers"];
+			var readingModes = volumeInfo["readingModes"];
+			strHtml += "PageCount: " + volumeInfo["pageCount"] + "<br>";
+			strHtml += "PrintType: " + volumeInfo["printType"] + "<br>";
+			strHtml+="<a href='./Bookdetails.html?s="+data1.items[infoIndex].id+"'target='_self'> Book Details</a></td></tr>";
+			})
+			strHtml += "</table></object>";
+		
+			$jsontip.html(strHtml);	
+			});
+		});
+	
+	
+</script>
+</head>
+<body>
+
+<div id="divframe">
+  
+  <div id="jsonTip">
+  </div>
+</div>
+</body>
+</html>
+</body>
+
+</html>
