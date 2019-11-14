@@ -29,9 +29,8 @@ $("#jsonTip").html("Results: Page " + pageNum + " <hr noshade>");
 for (i =0; i < 5; i++){
     var page = "&startIndex=" + i *10;
 	var num = i+1;
-	$("#jsonTip").append('<a href="javascript:;" class = "page" startIndex=' +page+ ' pageNum="'+num+'">'+(i+1)+'</a>&nbsp&nbsp');
+	$("#jsonTip").append('<a href="javascript:;" target="_self" class = "page" startIndex=' +page+ ' pageNum="'+num+'">'+(i+1)+'</a>&nbsp&nbsp');
 	}
-
 	$(".page").click(function(){
 			    start= $(this).attr("startIndex");
 				pageNum = $(this).attr("pageNum");
@@ -54,9 +53,8 @@ var strHtml = "<table>";
 				}
 				catch(err){
 				strHtml+="https://books.google.com/googlebooks/images/no_cover_thumb.gif width='50px'";}
-			strHtml += "><a href='Bookdetails.html?s="+ data1.items[i].id+"' target='_blank'>"+ volumeInfo["title"]+"</a>";
+			strHtml += "><a href='Bookdetails.html?s="+ data1.items[i].id+"' target='_parent'>"+ volumeInfo["title"]+"</a>";
 			
-
 			strHtml+="</div></td></tr>";
 		}
 			strHtml += "</table>";
