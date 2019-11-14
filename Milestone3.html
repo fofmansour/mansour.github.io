@@ -17,10 +17,12 @@
 
 <script>
 $(document).ready(function(){
-var start = "$startIndex=0";
+var start = "$startIndex=1";
 var pageNum=1;
 var input =document.getElementById("Book");
-$("#Search").click(function(){displaydata();});
+$("#Search").click(function(){displaydata();
+	
+});
 function displaydata(){
 var search=document.getElementById("Book").value;
 search=search.replace(/\s/g,"%20");
