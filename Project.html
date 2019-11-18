@@ -70,15 +70,15 @@ text-align: center;
 </head>
 <script>
 $(document).ready(function() {
-	
+	var media;
 	$(function() {
 		$(document).on('click', '#movietitle', function() {
 			var id=$(this).attr('movieid');
 			var type=$(this).attr('type');
-			console.log(id+" "+type);
-			if ( type === "movie")
+			console.log(id+" "+type + media);
+			if ( type === "movie" || media === "movie")
 				movieDetails(id);
-			else if (type === "tv")
+			else if (type === "tv" || media === "tv")
 				tvDetails(id);
 		});
 	});
@@ -102,6 +102,7 @@ $(document).ready(function() {
 		});
 	});
 	$("#Discoverymovies").click(function(){
+		media = "movie";
 		var url= "https://api.themoviedb.org/3/movie/now_playing?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US&page=1";
 		$.getJSON(url,function(data){	
 			console.log(url);
@@ -116,6 +117,7 @@ $(document).ready(function() {
 	});
 
 	$("#Discoverytv").click(function(){
+		media = "tv";
 		var url= "https://api.themoviedb.org/3/tv/top_rated?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US&page=1";
 		$.getJSON(url,function(data){	
 			console.log(url);
@@ -131,6 +133,7 @@ $(document).ready(function() {
 
 
 	$("#Popularmovies").click(function(){
+		media = "movie";
 		var url= "https://api.themoviedb.org/3/movie/popular?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
 		$.getJSON(url,function(data){	
 			console.log(url);
@@ -146,6 +149,7 @@ $(document).ready(function() {
 
 
 	$("#Populartv").click(function(){
+		media = "tv";
 		var url= "https://api.themoviedb.org/3/tv/popular?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
 		$.getJSON(url,function(data){	
 			console.log(url);
