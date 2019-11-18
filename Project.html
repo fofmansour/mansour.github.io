@@ -13,7 +13,7 @@ text-align: center;
 		}
 		html{
 		background:#b9dbf0;}
-		#shelfdetails
+
 		{
 		flex-wrap:wrap;
 		position: fixed;
@@ -166,10 +166,35 @@ $(document).ready(function() {
 	function movieDetails(id){
 		var url="https://api.themoviedb.org/3/movie/"+id+"?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
 		console.log(url);
+		$.getJSON(url,function(data){					
+			var $jsontip = $("#jsonTip");
+			var strHtml = "<table>";
+			strHtml += "<tr><td>";
+			var mov = data["belongs_to_collection"];
+			strHtml += "Title: " + mov["name"] + "<br />";
+			strHtml += '<img src="https://image.tmdb.org/t/p/w154/'+mov["poster_path"]+'" alt="thumbnail picture of the movie." />' + '<br/>';
+			strHtml += "budget: " + data["budget"] + "<br />";
+			strHtml += "</td></tr>";
+			strHtml += "</table>";
+			$jsontip.html(strHtml);
+		});
 	}
+	
 	function tvDetails(id){
 		var url="https://api.themoviedb.org/3/tv/"+id+"?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
 		console.log(url);
+		$.getJSON(url,function(data){					
+			var $jsontip = $("#jsonTip");
+			var strHtml = "<table>";
+			strHtml += "<tr><td>";
+			var mov = data["created by"];
+			strHtml += "Title: " + mov["name"] + "<br />";
+			strHtml += '<img src="https://image.tmdb.org/t/p/w300/'+mov["poster_path"]+'" alt="thumbnail picture of the movie." />' + '<br/>';
+			strHtml += "episode_run_time: " + data["episode_run_time"] + "<br />";
+			strHtml += "</td></tr>";
+			strHtml += "</table>";
+			$jsontip.html(strHtml);
+		});
 	}
 });
 </script>
