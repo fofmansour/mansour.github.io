@@ -1,0 +1,61 @@
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>getJSON</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<style type="text/css">
+ #divframe{ border:1px solid #999; width:75%; margin:0 auto;}
+ .loadTitle{ background:#CCC; height:30px;}
+  img{padding: 20px;}
+  .book-photo {
+			float: left;
+			width: 40%;
+			margin-right: 15px;
+		}
+  td{vertical-align:top;}
+  html{
+		background:#b9dbf0;}
+</style>
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+var i = window.location.search;
+var s=i.split("=");
+var id=s[1];
+var url="https://api.themoviedb.org/3/movie/"+id + "?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
+console.log(url);
+
+        	$.getJSON(url,function(data){					
+			var $jsontip = $("#jsonTip");
+			var strHtml = "";
+		
+			
+			//strHtml += '<img src="'+ url + data["backdrop_path"]+'" class="book-photo" />';
+			strHtml += "Adult: <br>";
+		
+		
+	
+			$jsontip.html(strHtml);	
+			});
+			$("#Test").click(function(){
+			window.history.back();
+			});
+		});
+	
+	
+</script>
+</head>
+<body>
+
+			<h3>Google-Movie Details</h3>
+			
+<div id="divframe">
+ 
+  <div id="jsonTip">
+  </div>
+</div>
+</body>
+</html>
+
+
