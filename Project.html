@@ -50,7 +50,7 @@ text-align: center;
 		top:30px;
 		right:30px;
 		}
-		.bookdiv{
+		.moviediv{
 		border:3px solid #bcd4e6;
 		border-radius: 2px;
 		width : 23%;
@@ -65,34 +65,168 @@ text-align: center;
 		}
 
 </style>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <script>
 $(document).ready(function() {
+	
+	$(function() {
+		$(document).on('click', '#movietitle', function() {
+			var id=$(this).attr('movieid');
+			var type=$(this).attr('type');
+			console.log(id+" "+type);
+			if ( type === "movie")
+				movieDetails(id);
+			else if (type === "tv")
+				tvDetails(id);
+		});
+	});
+	
+	$("#Searchbutton").click(function(){
+		console.log("outside");
+		var search=document.getElementById("searchValue").value;
+		search=search.replace(/\s/g,"%20");
+		var url= "https://api.themoviedb.org/3/search/multi?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US&page=1&query=" + search +"&include_adult=false";
+		$.getJSON(url,function(data){	
+			console.log(url);
+			var $jsontip = $("#jsonTip");
+			console.log(data);
+			var template = $('#searchTemplate').html();
+			 var html = Mustache.render(template, data);
+			  $jsontip.empty().html(html);
+			  
+			}).fail(function( jqxhr, textStatus, error ) {
+			var err = textStatus + ", " + error;
+			console.log( "Request Failed: " + err );
+		});
+	});
+	$("#Discoverymovies").click(function(){
+		var url= "https://api.themoviedb.org/3/movie/now_playing?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US&page=1";
+		$.getJSON(url,function(data){	
+			console.log(url);
+			var $jsontip = $("#jsonTip");
+			var template = $('#searchTemplate').html();
+			 var html = Mustache.render(template, data);
+			  $jsontip.empty().html(html);
+			}).fail(function( jqxhr, textStatus, error ) {
+			var err = textStatus + ", " + error;
+			console.log( "Request Failed: " + err );
+		});
+	});
 
-$("#Searchbutton").click(function(){
-console.log("outside");
-$.getJSON("https://api.themoviedb.org/3/search/movie?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US&page=1&query=" +  +"&include_adult=false",function(data){	
-	console.log(data);
-	}).fail(function( jqxhr, textStatus, error ) {
-    var err = textStatus + ", " + error;
-    console.log( "Request Failed: " + err );
-});
-});
-});
+	$("#Discoverytv").click(function(){
+		var url= "https://api.themoviedb.org/3/tv/top_rated?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US&page=1";
+		$.getJSON(url,function(data){	
+			console.log(url);
+			var $jsontip = $("#jsonTip");
+			var template = $('#tvResultsTemplate').html();
+			 var html = Mustache.render(template, data);
+			  $jsontip.empty().html(html);
+			}).fail(function( jqxhr, textStatus, error ) {
+			var err = textStatus + ", " + error;
+			console.log( "Request Failed: " + err );
+		});
+	});
 
+
+	$("#Popularmovies").click(function(){
+		var url= "https://api.themoviedb.org/3/movie/popular?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
+		$.getJSON(url,function(data){	
+			console.log(url);
+			var $jsontip = $("#jsonTip");
+			var template = $('#searchTemplate').html();
+			 var html = Mustache.render(template, data);
+			  $jsontip.empty().html(html);
+			}).fail(function( jqxhr, textStatus, error ) {
+			var err = textStatus + ", " + error;
+			console.log( "Request Failed: " + err );
+		});
+	});
+
+
+	$("#Populartv").click(function(){
+		var url= "https://api.themoviedb.org/3/tv/popular?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
+		$.getJSON(url,function(data){	
+			console.log(url);
+			var $jsontip = $("#jsonTip");
+			var template = $('#tvResultsTemplate').html();
+			 var html = Mustache.render(template, data);
+			  $jsontip.empty().html(html);
+			}).fail(function( jqxhr, textStatus, error ) {
+			var err = textStatus + ", " + error;
+			console.log( "Request Failed: " + err );
+		});
+	});
+
+	function movieDetails(id){
+		var url="https://api.themoviedb.org/3/movie/"+id+"?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
+		console.log(url);
+	}
+	function tvDetails(id){
+		var url="https://api.themoviedb.org/3/tv/"+id+"?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
+		console.log(url);
+	}
+});
 </script>
+
+ <script id='searchTemplate' type='text/template'>
+  {{#results}}
+  
+  <div class='moviediv' id= {{id}} >
+   <a href="javascript:;" class = 'movietitle' id='movietitle' movieid = {{id}} type={{media_type}}>{{title}}
+ 
+   </a><br>
+   <img src= https://image.tmdb.org/t/p/w154/{{poster_path}} alt="thumbnail picture of the movie."><br>
+
+  </div>
+  
+  {{/results}}
+ </script>
+ 
+  <script id='tvResultsTemplate' type='text/template'>
+  {{#results}}
+  
+  <div class='moviediv' id= {{id}} >
+   <a href="javascript:;" class = 'movietitle' id='movietitle' movieid = {{id}} type={{media_type}}>{{name}}
+ 
+   </a><br>
+   <img src= https://image.tmdb.org/t/p/w154/{{poster_path}} alt="thumbnail picture of the movie."><br>
+
+  </div>
+  
+  {{/results}}
+ </script>
+ 
+ <script id="moviedetails_template" type="text/html">
+
+<div>
+<img src= https://image.tmdb.org/t/p/w154/{{poster_path}} alt="thumbnail picture of the movie."><br>
+<h1>{{title}}</h1>
+
+ 
+<p>{{overview}}</p>
+<p>{{release_date}}</p>
+</div>
+</script>
+ <script id="tvdetails_template" type="text/html">
+ </script>
 <body>
 
-<h2 style="color:blue;"> MOVIE DATABASE</h2>
+<h2 style="color:blue;"> MOVIES DATABASE</h2>
+
  <input type="text" name="searchValue" id ="searchValue" autofocus placeholder = " Search" size = "60"><br>
 <button type="button" id="Searchbutton"> Search</button>
+<button type="button" id="Discoverymovies"> Discovery Movies</button>
+<button type="button" id="Discoverytv"> Discovery TV</button>
+<button type="button" id="Popularmovies"> Popular Movies</button>
+<button type="button" id="Populartv"> Popular TV</button>
 <div id= "Search">
 <a style="position:absolute; top:1%; right:5%"; href="index.html">Home page</a>
 
 
 </div>
-
+ <div id="jsonTip"> 
+  </div>
 </body>
 </html>
