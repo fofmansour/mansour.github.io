@@ -71,6 +71,16 @@ text-align: center;
 		top:30px;
 		right:30px;
 		}
+		#hidetvButton{
+		position: absolute;
+		top:30px;
+		right:30px;
+		}
+		#hidepersonButton{
+		position: absolute;
+		top:30px;
+		right:30px;
+		}
 		#hideShelf{
 		position: absolute;
 		top:30px;
@@ -211,8 +221,8 @@ $("#hideButton").on('click',hidemovieOverlay);
 		console.log(url);
 		var result = $("#TVdetails");
 		$.getJSON(url,function(data){					
-		result.html('<button type="button" id="hideButton"> Close</button>');
-$("#hideButton").on('click',hidetvOverlay);
+		result.html('<button type="button" id="hidetvButton"> Close</button>');
+$("#hidetvButton").on('click',hidetvOverlay);
 			
 			var template = $('#tvdetails_template').html();
      var html = Mustache.render(template, data);
@@ -225,8 +235,8 @@ $("#hideButton").on('click',hidetvOverlay);
 		console.log(url);
 		var result = $("#persondetails");
 		$.getJSON(url,function(data){					
-		result.html('<button type="button" id="hideButton"> Close</button>');
-$("#hideButton").on('click',hidepersonOverlay);
+		result.html('<button type="button" id="hidepersonButton"> Close</button>');
+$("#hidepersonButton").on('click',hidepersonOverlay);
 			
 			var template = $('#persondetails_template').html();
      var html = Mustache.render(template, data);
@@ -287,6 +297,19 @@ $("#hideButton").on('click',hidepersonOverlay);
 </div>
 </script>
  <script id="tvdetails_template" type="text/html">
+   <img src= https://image.tmdb.org/t/p/w154/{{poster_path}} alt="thumbnail picture of the tv."><br>
+   <h2>Name: {{name}}</h2>
+   <p>{{overview}}</p>
+   <h3>Last episode to air: </h3>
+     <p>air date: {{last_episode_to_air.air_date}}</p>
+     <p>episode_number: {{last_episode_to_air.episode_number}}</p>
+     <p>name: {{last_episode_to_air.name}}</p>
+     <p>overview: {{last_episode_to_air.overview}}</p>
+   <h3>Next episode to air:</h3>
+     <p>air date: {{next_episode_to_air.air_date}}</p>
+     <p>episode_number: {{next_episode_to_air.episode_number}}</p>
+     <p>name: {{next_episode_to_air.name}}</p>
+   <h3>Status: {{status}}</h3>
  </script>
  <script id="persondetails_template" type="text/html">
  </script>
