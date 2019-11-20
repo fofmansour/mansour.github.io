@@ -13,7 +13,7 @@ text-align: center;
 		}
 		html{
 		background:#b9dbf0;}
-
+#TVdetails
 		{
 		flex-wrap:wrap;
 		position: fixed;
@@ -27,7 +27,33 @@ text-align: center;
 		display: none;
 		z-index: 1;
 		}
-		#bookdetails
+		#Persondetails
+		{
+		position: fixed;
+		top:50px;
+		left: 120px;
+		width: 80%;
+		overflow:auto;
+		height: 80%;
+		background-color:#bcd4e6;
+		padding: 50px 10px 10px 10px;
+		display: none;
+		z-index: 1;
+		}
+		#moviedetails
+		{
+		position: fixed;
+		top:50px;
+		left: 120px;
+		width: 80%;
+		overflow:auto;
+		height: 80%;
+		background-color:#bcd4e6;
+		padding: 50px 10px 10px 10px;
+		display: none;
+		z-index: 1;
+		}
+		#persondetails
 		{
 		position: fixed;
 		top:50px;
@@ -80,6 +106,8 @@ $(document).ready(function() {
 				movieDetails(id);
 			else if (type === "tv" || media === "tv")
 				tvDetails(id);
+				else if (type === "person" || media === "person")
+				personDetails(id);
 		});
 	});
 	
@@ -166,36 +194,56 @@ $(document).ready(function() {
 	function movieDetails(id){
 		var url="https://api.themoviedb.org/3/movie/"+id+"?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
 		console.log(url);
+		var result = $("#moviedetails");
 		$.getJSON(url,function(data){					
-			var $jsontip = $("#jsonTip");
-			var strHtml = "<table>";
-			strHtml += "<tr><td>";
-			var mov = data["belongs_to_collection"];
-			strHtml += "Title: " + mov["name"] + "<br />";
-			strHtml += '<img src="https://image.tmdb.org/t/p/w154/'+mov["poster_path"]+'" alt="thumbnail picture of the movie." />' + '<br/>';
-			strHtml += "budget: " + data["budget"] + "<br />";
-			strHtml += "</td></tr>";
-			strHtml += "</table>";
-			$jsontip.html(strHtml);
+		result.html('<button type="button" id="hideButton"> Close</button>');
+$("#hideButton").on('click',hidemovieOverlay);
+			
+			var template = $('#moviedetails_template').html();
+     var html = Mustache.render(template, data);
+	 result.append(html);	
 		});
+		$("#moviedetails").fadeIn();
 	}
 	
 	function tvDetails(id){
 		var url="https://api.themoviedb.org/3/tv/"+id+"?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
 		console.log(url);
+		var result = $("#TVdetails");
 		$.getJSON(url,function(data){					
-			var $jsontip = $("#jsonTip");
-			var strHtml = "<table>";
-			strHtml += "<tr><td>";
-			var mov = data["created by"];
-			strHtml += "Title: " + mov["name"] + "<br />";
-			strHtml += '<img src="https://image.tmdb.org/t/p/w300/'+mov["poster_path"]+'" alt="thumbnail picture of the movie." />' + '<br/>';
-			strHtml += "episode_run_time: " + data["episode_run_time"] + "<br />";
-			strHtml += "</td></tr>";
-			strHtml += "</table>";
-			$jsontip.html(strHtml);
+		result.html('<button type="button" id="hideButton"> Close</button>');
+$("#hideButton").on('click',hidetvOverlay);
+			
+			var template = $('#tvdetails_template').html();
+     var html = Mustache.render(template, data);
+	 result.append(html);	
 		});
+		$("#TVdetails").fadeIn();
 	}
+		function personDetails(id){
+		var url="https://api.themoviedb.org/3/person/"+id+"?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
+		console.log(url);
+		var result = $("#persondetails");
+		$.getJSON(url,function(data){					
+		result.html('<button type="button" id="hideButton"> Close</button>');
+$("#hideButton").on('click',hidepersonOverlay);
+			
+			var template = $('#persondetails_template').html();
+     var html = Mustache.render(template, data);
+	 result.append(html);	
+		});
+		$("#persondetails").fadeIn();
+	}
+	
+				function hidemovieOverlay(){
+				  $ ("#moviedetails").fadeOut();
+				  }
+				  	function hidetvOverlay(){
+				  $ ("#TVdetails").fadeOut();
+				  }
+				  function hidepersonOverlay(){
+				  $ ("#persondetails").fadeOut();
+				  }
 });
 </script>
 
@@ -203,10 +251,10 @@ $(document).ready(function() {
   {{#results}}
   
   <div class='moviediv' id= {{id}} >
-   <a href="javascript:;" class = 'movietitle' id='movietitle' movieid = {{id}} type={{media_type}}>{{title}}
+   <a href="javascript:;" class = 'movietitle' id='movietitle' movieid = {{id}} type={{media_type}}>{{title}}{{name}}
  
    </a><br>
-   <img src= https://image.tmdb.org/t/p/w154/{{poster_path}} alt="thumbnail picture of the movie."><br>
+   <img src= https://image.tmdb.org/t/p/w154/{{poster_path}}{{profile_path}} alt="thumbnail picture of the movie."><br>
 
   </div>
   
@@ -240,16 +288,18 @@ $(document).ready(function() {
 </script>
  <script id="tvdetails_template" type="text/html">
  </script>
+ <script id="persondetails_template" type="text/html">
+ </script>
 <body>
 
 <h2 style="color:blue;"> MOVIES DATABASE</h2>
 
- <input type="text" name="searchValue" id ="searchValue" autofocus placeholder = " Search" size = "60"><br>
+<h1> <input type="text" name="searchValue" id ="searchValue" autofocus placeholder = " Search" size = "60"><br>
 <button type="button" id="Searchbutton"> Search</button>
 <button type="button" id="Discoverymovies"> Discovery Movies</button>
 <button type="button" id="Discoverytv"> Discovery TV</button>
 <button type="button" id="Popularmovies"> Popular Movies</button>
-<button type="button" id="Populartv"> Popular TV</button>
+<button type="button" id="Populartv"> Popular TV</button></h1>
 <div id= "Search">
 <a style="position:absolute; top:1%; right:5%"; href="index.html">Home page</a>
 
@@ -257,5 +307,9 @@ $(document).ready(function() {
 </div>
  <div id="jsonTip"> 
   </div>
+  <div id="moviedetails"></div>
+  <div id="TVdetails"></div>
+  <div id="persondetails"></div>
+  
 </body>
 </html>
