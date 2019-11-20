@@ -99,7 +99,6 @@ text-align: center;
 		display: flex;
 		flex-wrap: wrap;
 		}
-
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -112,7 +111,9 @@ $(document).ready(function() {
 			var id=$(this).attr('movieid');
 			var type=$(this).attr('type');
 			console.log(id+" "+type + media);
-			if ( type === "movie" || media === "movie")
+			if (type === "person")
+				personDetails(id);
+			else if ( type === "movie" || media === "movie")
 				movieDetails(id);
 			else if (type === "tv" || media === "tv")
 				tvDetails(id);
@@ -125,7 +126,17 @@ $(document).ready(function() {
 		console.log("outside");
 		var search=document.getElementById("searchValue").value;
 		search=search.replace(/\s/g,"%20");
-		var url= "https://api.themoviedb.org/3/search/multi?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US&page=1&query=" + search +"&include_adult=false";
+		console.log(document.getElementById("select").value);
+		if (document.getElementById("select").value === "all"){
+			var url= "https://api.themoviedb.org/3/search/multi?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US&page=1&query=" + search +"&include_adult=false";
+		}else if (document.getElementById("select").value === "movies") {
+			var url = "https://api.themoviedb.org/3/search/movie?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US&page=1&query=" + search +"&include_adult=false";
+		} else if (document.getElementById("select").value === "tv") {
+			var url = "https://api.themoviedb.org/3/search/tv?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US&page=1&query=" + search +"&include_adult=false";
+		} else if (document.getElementById("select").value === "person") {
+			var url = "https://api.themoviedb.org/3/search/person?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US&page=1&query=" + search +"&include_adult=false";
+		}
+		console.log(url)
 		$.getJSON(url,function(data){	
 			console.log(url);
 			var $jsontip = $("#jsonTip");
@@ -212,6 +223,7 @@ $("#hideButton").on('click',hidemovieOverlay);
 			var template = $('#moviedetails_template').html();
      var html = Mustache.render(template, data);
 	 result.append(html);	
+	 getCastMembers(data.id, "movie");
 		});
 		$("#moviedetails").fadeIn();
 	}
@@ -227,9 +239,30 @@ $("#hidetvButton").on('click',hidetvOverlay);
 			var template = $('#tvdetails_template').html();
      var html = Mustache.render(template, data);
 	 result.append(html);	
-		});
-		$("#TVdetails").fadeIn();
-	}
+		getCastMembers(data.id, "tv");
+});
+$("#TVdetails").fadeIn();
+}
+  function getCastMembers(id, type){
+  if ( type === "tv"){
+	var result = $("#tvcast");
+    var url = "https://api.themoviedb.org/3/tv/" + id + "/credits?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
+	}else{
+		var result = $("#mvcast");
+	  var url = "https://api.themoviedb.org/3/movie/" + id + "/credits?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
+    }
+	console.log(url);
+    $.getJSON(url, function(data){
+      
+	  var list = ""
+	  for(i = 0; i < 5; i++)
+	  {
+		list += "<a href='javascript:;' class = 'movietitle' id='movietitle' movieid = " + data.cast[i].id + " type='person'>" + data.cast[i].name + "</a><br>";
+	  }
+      console.log(list);
+      result.html(list);
+    });
+  }
 		function personDetails(id){
 		var url="https://api.themoviedb.org/3/person/"+id+"?api_key=9c25c51876d55c183e62996849b9fe6d&language=en-US";
 		console.log(url);
@@ -293,13 +326,20 @@ $("#hidepersonButton").on('click',hidepersonOverlay);
 
  
 <p>{{overview}}</p>
+
 <p>{{release_date}}</p>
+<h3>Cast Members:</h3>
+   <div id="mvcast"></div>
 </div>
 </script>
+
+
  <script id="tvdetails_template" type="text/html">
    <img src= https://image.tmdb.org/t/p/w154/{{poster_path}} alt="thumbnail picture of the tv."><br>
    <h2>Name: {{name}}</h2>
    <p>{{overview}}</p>
+   <h3>Cast Members:</h3>
+   <div id="tvcast"></div>
    <h3>Last episode to air: </h3>
      <p>air date: {{last_episode_to_air.air_date}}</p>
      <p>episode_number: {{last_episode_to_air.episode_number}}</p>
@@ -310,20 +350,60 @@ $("#hidepersonButton").on('click',hidepersonOverlay);
      <p>episode_number: {{next_episode_to_air.episode_number}}</p>
      <p>name: {{next_episode_to_air.name}}</p>
    <h3>Status: {{status}}</h3>
+   
  </script>
  <script id="persondetails_template" type="text/html">
+   <img src= https://image.tmdb.org/t/p/w154/{{profile_path}} alt="thumbnail picture of the tv."><br>
+   <h3>Name: {{name}}</h3>
+      <h3>Birthday: {{birthday}}</h3>
+      <p>Known for {{known_for_department}}</p>
+        <p><strong>Biography: </strong>{{biography}}</p>
+          <h3>Place of Birth: {{place_of_birth}}</h3>
+          <a href=https://www.imdb.com/name/{{imdb_id}} alt="imdb page" target="_blank">IMDB Page</a>
  </script>
 <body>
 
-<h2 style="color:blue;"> MOVIES DATABASE</h2>
 
+
+
+
+
+
+
+
+
+
+<h2 style="color:blue;"> MOVIES DATABASE</h2>
+<div>
+<select id= "select">
+  <option value="all">All</option>
+  <option value="movies">Movies</option>
+  <option value="tv">TV</option>
+  <option value="person">Person</option>
+</select>
 <h1> <input type="text" name="searchValue" id ="searchValue" autofocus placeholder = " Search" size = "60"><br>
 <button type="button" id="Searchbutton"> Search</button>
 <button type="button" id="Discoverymovies"> Discovery Movies</button>
 <button type="button" id="Discoverytv"> Discovery TV</button>
 <button type="button" id="Popularmovies"> Popular Movies</button>
 <button type="button" id="Populartv"> Popular TV</button></h1>
+</div>
 <div id= "Search">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <a style="position:absolute; top:1%; right:5%"; href="index.html">Home page</a>
 
 
