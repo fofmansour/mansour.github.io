@@ -65,9 +65,8 @@ text-align: center;
 		display: flex;
 		flex-wrap: wrap;
 		}
-		}
 		
-			</style>
+		</style>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.min.js"></script>
 <script id="details_template" type="text/html">
@@ -106,7 +105,7 @@ text-align: center;
 
 <script>
 $(document).ready(function(){
-var start = "$startIndex=0";
+var start = "&startIndex=0";
 var pageNum=1;
 var loading = false;
 var input =document.getElementById("Book");
@@ -127,7 +126,7 @@ var search=document.getElementById("Book").value;
 search=search.replace(/\s/g,"%20");
 var url="https://www.googleapis.com/books/v1/volumes?q=";
 console.log(url);
-			$ ("#jsonTip").append("<br><br>");
+			$("#jsonTip").append("<br><br>");
 			var url= url + search + start;
 			console.log(url);		
 $.getJSON(url,function(data1){
