@@ -106,6 +106,7 @@ text-align: center;
 <script>
 $(document).ready(function() {
 	var media;
+	$("#viewButton").on("click",changeView);
 	$(function() {
 		$(document).on('click', '#movietitle', function() {
 			var id=$(this).attr('movieid');
@@ -243,6 +244,16 @@ $("#hidetvButton").on('click',hidetvOverlay);
 });
 $("#TVdetails").fadeIn();
 }
+function changeView(){
+   if ($("#viewButton").attr("viewType")=="grid"){
+   $(".moviediv").css("width","98%");
+   $("#viewButton").attr("viewType","list");
+   }
+   else{
+     $(".moviediv").css("width","23%");
+	 $("#viewButton").attr("viewType","grid");
+	 }}
+							
   function getCastMembers(id, type){
   if ( type === "tv"){
 	var result = $("#tvcast");
@@ -383,30 +394,15 @@ $("#hidepersonButton").on('click',hidepersonOverlay);
 </select>
 <h1> <input type="text" name="searchValue" id ="searchValue" autofocus placeholder = " Search" size = "60"><br>
 <button type="button" id="Searchbutton"> Search</button>
+<button type="button" id="viewButton" viewType="grid">Switch View</button>
 <button type="button" id="Discoverymovies"> Discovery Movies</button>
 <button type="button" id="Discoverytv"> Discovery TV</button>
 <button type="button" id="Popularmovies"> Popular Movies</button>
 <button type="button" id="Populartv"> Popular TV</button></h1>
 </div>
 <div id= "Search">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<a style="position:absolute; top:1%; right:5%"; href="index.html">Home page</a>
-
-
+<a style="position:absolute; top:1%; right:1%"; href="index.html">Home page</a>
+<p style="position:absolute; top:3%; right:1%";>Mansour Fofana <br> Aimal Sayeq</p>
 </div>
  <div id="jsonTip"> 
   </div>
